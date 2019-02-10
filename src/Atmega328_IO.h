@@ -22,10 +22,12 @@ class Cing
     int ReadPotentiometer();
     float ReadTempSensor(int sensor = 0);
     int ReadIRSensor();
-    void LedStart();
+    void StartLed();
   	void SetLedColor(int led = 1,int red = 100,int green = 100,int blue = 100);
-  	void LedShow();
+  	void ShowLed();
     int ReadColorSensor();
+    void StartGyro(bool gyro_off = false);
+    float ReadGyro(String axis,int mode="angle");
 // local variables
   private:
     void sendMessage();

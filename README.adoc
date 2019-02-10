@@ -1,4 +1,4 @@
-= Atmega8_IO Library for robot Cing =
+= Atmega328_IO Library for robot Cing =
 
 This library allows robot Cing to be programmed easily.
 

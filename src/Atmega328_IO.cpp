@@ -10,6 +10,8 @@ Created by RobotCing Team
 #include <DallasTemperature.h>
 #include <Adafruit_NeoPixel.h>
 #include <SoftwareSerial.h>
+#include <MPU6050_tockn.h>
+#include <Wire.h>
 //--------------------------------------------
 #include "Arduino.h"
 #include "Atmega328_IO.h"
@@ -21,6 +23,10 @@ Cing::Cing(){}
 #define PIN 13
 #define Neopixels 120
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(Neopixels, PIN, NEO_GRB + NEO_KHZ800);
+//--------------------------------------------
+//            Gyro setup
+//--------------------------------------------
+MPU6050 mpu6050(Wire);
 //--------------------------------------------
 //            DS18B20 Setup
 //--------------------------------------------
@@ -295,26 +301,57 @@ int Cing::ReadIRSensor()
 //--------------------------------------------
 //            LED WS2812
 //--------------------------------------------
-void Cing::LedStart()
-	{
-		pixels.begin();
-	}
-void Cing::SetLedColor(int led,int red,int green,int blue)
-	{
-		if(led>0)
-			{
-				pixels.setPixelColor(led-1,pixels.Color(map(green,0,100,0,255),map(red,0,100,0,255),map(blue,0,100,0,255)));
-			}
-		else
-			{
-				pixels.setPixelColor(0,pixels.Color(map(green,0,100,0,255),map(red,0,100,0,255),map(blue,0,100,0,255)));
-			}
-	}
-void Cing::LedShow()
+void Cing::StartLed(){
+	pixels.begin();
+}
+void Cing::SetLedColor(int led,int red,int green,int blue){
+	if(led>0)
+		{
+			pixels.setPixelColor(led-1,pixels.Color(map(green,0,100,0,255),map(red,0,100,0,255),map(blue,0,100,0,255)));
+		}
+	else
+		{
+			pixels.setPixelColor(0,pixels.Color(map(green,0,100,0,255),map(red,0,100,0,255),map(blue,0,100,0,255)));
+		}
+}
+void Cing::ShowLed()
 	{
 		pixels.show();
 	}
 
+//--------------------------------------------
+//                  Gyro
+//--------------------------------------------
+void Cing::StartGyro(bool gyro_off){
+	Wire.begin();
+  mpu6050.begin();
+  mpu6050.calcGyroOffsets(gyro_off);
+}
+float Cing::ReadGyro(String axis,int mode){
+	mpu6050.update();
+	if(mode == "angle"){
+		if(axis == "x" || axis == "X"){
+			return mpu6050.getGyroAngleX();
+		}
+		else if(axis == "y" || axis == "Y"){
+			return mpu6050.getGyroAngleY();
+		}
+		else if(axis == "z" || axis == "Z"){
+			return mpu6050.getGyroAngleZ();
+		}
+	}
+	else{
+		if(axis == "x" || axis == "X"){
+			return mpu6050.getAccX();
+		}
+		else if(axis == "y" || axis == "Y"){
+			return mpu6050.getAccY();
+		}
+		else if(axis == "z" || axis == "Z"){
+			return mpu6050.getAccZ();
+		}
+	}
+}
 //--------------------------------------------
 //                  ColorSensor
 //--------------------------------------------
