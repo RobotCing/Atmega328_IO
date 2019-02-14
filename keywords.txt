@@ -28,6 +28,7 @@ ShowLed			                   KEYWORD2
 ReadColorSensor                KEYWORD2
 StartGyro                      KEYWORD2
 ReadGyro                       KEYWORD2
+ReadShineArray                 KEYWORD2
 #######################################
 # Constants (LITERAL1)
 #######################################

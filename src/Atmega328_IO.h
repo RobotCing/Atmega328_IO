@@ -28,6 +28,7 @@ class Cing
     int ReadColorSensor();
     void StartGyro(bool gyro_off = false);
     float ReadGyro(String axis,int mode="angle");
+    int ReadShineArray(int sensor=1);
 // local variables
   private:
     void sendMessage();

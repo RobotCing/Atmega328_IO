@@ -254,8 +254,13 @@ int Cing::ReadShineSensor(int sensor)
 bool Cing::ReadButton()
 	{
 		#define Button A6
-		pinMode(Button,INPUT);
-		bool button_value = digitalRead(Button);
+		bool button_value;
+		if(analogRead(Button)>1000){
+			button_value = 1;
+		}
+		else{
+			button_value = 0;
+		}
 		return button_value;
 	}
 //--------------------------------------------
@@ -351,6 +356,19 @@ float Cing::ReadGyro(String axis,int mode){
 			return mpu6050.getAccZ();
 		}
 	}
+}
+//--------------------------------------------
+//                  Shine Array
+//--------------------------------------------
+int Cing::ReadShineArray(int sensor){
+  int value1 = map(analogRead(A6),0,1023,0,100);
+  int value2 = map(analogRead(A7),0,1023,0,100);
+  if(sensor == 1){
+    return value1;
+  }
+  else{
+    return value2;
+  }
 }
 //--------------------------------------------
 //                  ColorSensor
