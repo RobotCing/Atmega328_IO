@@ -29,9 +29,12 @@ class Cing
     void StartGyro(bool gyro_off = false);
     float ReadGyro(String axis,int mode="angle");
     int ReadShineArray(int sensor=1);
+    void ShowSensors(String mode = "digital");
 // local variables
   private:
     void sendMessage();
     void SensorMode();
+    void Check(uint8_t address, String modul);
+    void PrintSensor(int sensor,String sensor_name);
 };
 #endif

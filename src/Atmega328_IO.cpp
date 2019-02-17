@@ -371,6 +371,65 @@ int Cing::ReadShineArray(int sensor){
   }
 }
 //--------------------------------------------
+//               Show Sensors
+//--------------------------------------------
+void Cing::ShowSensors(String mode){
+	Wire.begin();
+	Serial.begin(115200);
+	Check(0x69,"|BMS                          ");
+	Check(0x68,"|Gyro                         ");
+	Check(0x68,"|Sound System                 ");
+  Check(0x3c,"|OLED Display                 ");
+	Check(0x3c,"|16x2 Display                 ");
+	Check(0x3d,"|Ultrasonic Sensor            ");
+	Check(0x29,"|Lidar                        ");
+	Check(0x77,"|Barometric Pressure Sensor   ");
+	Check(0x77,"|AltitudeSensor               ");
+	PrintSensor(ReadLightSensor(1,"analog"),"LightSensor1                   ");
+	PrintSensor(ReadLightSensor(2,"analog"),"LightSensor2                   ");
+	PrintSensor(ReadPotentiometer(),"Potentiometer                  ");
+	PrintSensor(ReadButton(),"Button                         ");
+	PrintSensor(ReadShineArray(1),"ShineArray1                    ");
+	PrintSensor(ReadShineArray(2),"ShineArray2                    ");
+	PrintSensor(ReadTempSensor(),"TempSensor                     ");
+	Serial.println("-------------------------------------");
+	delay(1);
+}
+//--------------------------------------------
+void Cing::Check(uint8_t address, String modul){
+  Wire.beginTransmission(address);
+  int error = Wire.endTransmission();
+  Serial.print(modul);
+  Serial.print(": ");
+  if (error == 0) {
+      Serial.println("  Ok|");
+    }
+    else {
+        Serial.println("Fail|");
+      }
+}
+void Cing::PrintSensor(int sensor,String sensor_name){
+	Serial.print("|");
+	Serial.print(sensor_name);
+	if(sensor>9 && sensor<100){
+			Serial.print("  ");
+			Serial.print(sensor);
+			Serial.println("|");
+	}
+	else if(sensor== 100){
+		Serial.print(sensor);
+		Serial.println(" |");
+	}
+	else if(sensor==-127){
+		Serial.println("Fail|");
+	}
+	else{
+		Serial.print("   ");
+		Serial.print(sensor);
+		Serial.println("|");
+	}
+}
+//--------------------------------------------
 //                  ColorSensor
 //--------------------------------------------
 /*
