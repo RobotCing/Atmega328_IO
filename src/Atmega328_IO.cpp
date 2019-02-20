@@ -383,37 +383,45 @@ void Cing::TestInit(){
 
 }
 void Cing::Test(String mode){
-	SetLedColor(1,20,0,0);
-	SetLedColor(2,0,20,0);
-	SetLedColor(3,0,0,20);
-	SetLedColor(4,20,20,20);
+	SetLedColor(1,0,0,0);
+	SetLedColor(2,0,0,20);
+	SetLedColor(3,20,0,0);
+	SetLedColor(4,0,20,0);
 	ShowLed();
 	Serial.println(Check(0x69));//BMS
 	//Gyro
 	if(Check(0x68)=="Ok"){
+		Serial.print("X:");
 		Serial.print(ReadGyro("x","angle"));
 		Serial.print(" ");
+		Serial.print("Y:");
 		Serial.print(ReadGyro("y","angle"));
 		Serial.print(" ");
-		Serial.print(ReadGyro("z","angle"));
+		Serial.print("Z:");
+		Serial.println(ReadGyro("z","angle"));
 		Serial.print(" ");
+		Serial.print("X:");
 		Serial.print(ReadGyro("x","acceleration"));
-		Serial.print(" ");
+		Serial.print("G ");
+		Serial.print("Y:");
 		Serial.print(ReadGyro("y","acceleration"));
-		Serial.print(" ");
-		Serial.println(ReadGyro("z","acceleration"));
+		Serial.print("G ");
+		Serial.print("Z:");
+		Serial.print(ReadGyro("z","acceleration"));
+		Serial.println("G");
 	}
 	else{
-		Serial.println("Fail Fail Fail Fail Fail Fail");
+		Serial.println("Fail");
+		Serial.println("Fail");
 	}
 	Serial.println(Check(0x68));//Sound System
 	Serial.println(Check(0x3c));//Oled Display
-	Serial.println(Check(0x3c));//16x2 Display
+	Serial.println(Check(0x3f));//16x2 Display
 	Serial.println(Check(0x3d));//Ultrasonic Sensor
 	Serial.println(Check(0x29));//Lidar
 	Serial.println(Check(0x77));//Barometric Pressure Sensor
-	Serial.println(Check(0x77));//AltitudeSensor
-	
+	Serial.println(Check(0x77));//Altitude Sensor
+
 	Serial.println(ReadLightSensor(1,"analog"));//LightSensor1
 	Serial.println(ReadLightSensor(2,"analog"));//LightSensor2
 	Serial.println(ReadPotentiometer());//Potentiometer
