@@ -373,61 +373,69 @@ int Cing::ReadShineArray(int sensor){
 //--------------------------------------------
 //               Show Sensors
 //--------------------------------------------
-void Cing::ShowSensors(String mode){
+void Cing::TestInit(){
+	StartLed();
 	Wire.begin();
 	Serial.begin(115200);
-	Check(0x69,"|BMS                          ");
-	Check(0x68,"|Gyro                         ");
-	Check(0x68,"|Sound System                 ");
-  Check(0x3c,"|OLED Display                 ");
-	Check(0x3c,"|16x2 Display                 ");
-	Check(0x3d,"|Ultrasonic Sensor            ");
-	Check(0x29,"|Lidar                        ");
-	Check(0x77,"|Barometric Pressure Sensor   ");
-	Check(0x77,"|AltitudeSensor               ");
-	PrintSensor(ReadLightSensor(1,"analog"),"LightSensor1                   ");
-	PrintSensor(ReadLightSensor(2,"analog"),"LightSensor2                   ");
-	PrintSensor(ReadPotentiometer(),"Potentiometer                  ");
-	PrintSensor(ReadButton(),"Button                         ");
-	PrintSensor(ReadShineArray(1),"ShineArray1                    ");
-	PrintSensor(ReadShineArray(2),"ShineArray2                    ");
-	PrintSensor(ReadTempSensor(),"TempSensor                     ");
-	Serial.println("-------------------------------------");
+	if(Check(0x68)=="Ok"){
+		StartGyro();
+	}
+
+}
+void Cing::Test(String mode){
+	SetLedColor(1,20,0,0);
+	SetLedColor(2,0,20,0);
+	SetLedColor(3,0,0,20);
+	SetLedColor(4,20,20,20);
+	ShowLed();
+	Serial.println(Check(0x69));//BMS
+	//Gyro
+	if(Check(0x68)=="Ok"){
+		Serial.print(ReadGyro("x","angle"));
+		Serial.print(" ");
+		Serial.print(ReadGyro("y","angle"));
+		Serial.print(" ");
+		Serial.print(ReadGyro("z","angle"));
+		Serial.print(" ");
+		Serial.print(ReadGyro("x","acceleration"));
+		Serial.print(" ");
+		Serial.print(ReadGyro("y","acceleration"));
+		Serial.print(" ");
+		Serial.println(ReadGyro("z","acceleration"));
+	}
+	else{
+		Serial.println("Fail Fail Fail Fail Fail Fail");
+	}
+	Serial.println(Check(0x68));//Sound System
+	Serial.println(Check(0x3c));//Oled Display
+	Serial.println(Check(0x3c));//16x2 Display
+	Serial.println(Check(0x3d));//Ultrasonic Sensor
+	Serial.println(Check(0x29));//Lidar
+	Serial.println(Check(0x77));//Barometric Pressure Sensor
+	Serial.println(Check(0x77));//AltitudeSensor
+	
+	Serial.println(ReadLightSensor(1,"analog"));//LightSensor1
+	Serial.println(ReadLightSensor(2,"analog"));//LightSensor2
+	Serial.println(ReadPotentiometer());//Potentiometer
+	Serial.println(ReadButton());//Button
+	Serial.println(ReadShineArray(1));//ShineArray1
+	Serial.println(ReadShineArray(2));//ShineArray2
+	Serial.println(ReadTempSensor());//TempSensor
+	Serial.println("------");
 	delay(1);
 }
 //--------------------------------------------
-void Cing::Check(uint8_t address, String modul){
+String Cing::Check(uint8_t address){
   Wire.beginTransmission(address);
   int error = Wire.endTransmission();
-  Serial.print(modul);
-  Serial.print(": ");
+	String return_value;
   if (error == 0) {
-      Serial.println("  Ok|");
+			return_value = "Ok";
     }
     else {
-        Serial.println("Fail|");
+        return_value = "Fail";
       }
-}
-void Cing::PrintSensor(int sensor,String sensor_name){
-	Serial.print("|");
-	Serial.print(sensor_name);
-	if(sensor>9 && sensor<100){
-			Serial.print("  ");
-			Serial.print(sensor);
-			Serial.println("|");
-	}
-	else if(sensor== 100){
-		Serial.print(sensor);
-		Serial.println(" |");
-	}
-	else if(sensor==-127){
-		Serial.println("Fail|");
-	}
-	else{
-		Serial.print("   ");
-		Serial.print(sensor);
-		Serial.println("|");
-	}
+	return return_value;
 }
 //--------------------------------------------
 //                  ColorSensor
