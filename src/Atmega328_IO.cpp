@@ -429,6 +429,9 @@ void Cing::Test(String mode){
 	Serial.println(ReadShineArray(1));//ShineArray1
 	Serial.println(ReadShineArray(2));//ShineArray2
 	Serial.println(ReadTempSensor());//TempSensor
+	Serial.println(Check(0x40));//Servo Board
+	Serial.println(Check(0x41));//Motor Encoder A
+	Serial.println(Check(0x42));//Motor Encoder B
 	Serial.println("------");
 	delay(1);
 }
