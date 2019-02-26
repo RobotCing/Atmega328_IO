@@ -30,11 +30,14 @@ class Cing
     float ReadGyro(String axis,int mode="angle");
     int ReadShineArray(int sensor=1);
     void Test(String mode = "digital");
-    void TestInit();
+    void InitTest();
+    void InitIR();
+    int ReadIR();
 // local variables
   private:
     void sendMessage();
     void SensorMode();
     String Check(uint8_t address);
+    void SetIRValue();
 };
 #endif

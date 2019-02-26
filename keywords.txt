@@ -12,7 +12,7 @@ Atmega328_IO	                   KEYWORD1
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
-Robot                          KEYWORD2
+Cing                           KEYWORD2
 RunMotor					             KEYWORD2
 ReadLightSensor				         KEYWORD2
 ReadUltrasonicSensor		       KEYWORD2
@@ -30,7 +30,9 @@ StartGyro                      KEYWORD2
 ReadGyro                       KEYWORD2
 ReadShineArray                 KEYWORD2
 Test                           KEYWORD2
-TestInit                       KEYWORD2
+InitTest                       KEYWORD2
+InitIR                         KEYWORD2
+ReadIR                         KEYWORD2
 #######################################
 # Constants (LITERAL1)
 #######################################

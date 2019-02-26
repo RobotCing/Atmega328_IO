@@ -12,6 +12,8 @@ Created by RobotCing Team
 #include <SoftwareSerial.h>
 #include <MPU6050_tockn.h>
 #include <Wire.h>
+#include <IRremote.h>
+
 //--------------------------------------------
 #include "Arduino.h"
 #include "Atmega328_IO.h"
@@ -33,6 +35,12 @@ MPU6050 mpu6050(Wire);
 #define ONE_WIRE_BUS 13
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
+//--------------------------------------------
+//               IR Setup
+//--------------------------------------------
+#define RECV_PIN 4
+IRrecv irrecv(RECV_PIN);
+decode_results results;
 //--------------------------------------------
 //              Motors
 //--------------------------------------------
@@ -373,7 +381,7 @@ int Cing::ReadShineArray(int sensor){
 //--------------------------------------------
 //               Show Sensors
 //--------------------------------------------
-void Cing::TestInit(){
+void Cing::InitTest(){
 	StartLed();
 	Wire.begin();
 	Serial.begin(115200);
@@ -447,6 +455,43 @@ String Cing::Check(uint8_t address){
         return_value = "Fail";
       }
 	return return_value;
+}
+
+//--------------------------------------------
+//               Show Sensors
+//--------------------------------------------
+int irvalue;
+void Cing::InitIR(){
+	irrecv.enableIRIn();
+}
+
+void Cing::SetIRValue(){
+	long buttons[17] = {
+		16753245,16736925,
+		16769565,16720605,
+		16712445,16761405,
+		16769055,16754775,
+		16748655,16738455,
+		16750695,16756815,
+		16718055,16726215,
+		16730805,16716015,
+		16734885
+	};
+	if (irrecv.decode(&results)) {
+		if(results.value != 4294967295){
+			for(int x = 0;x<17;x++){
+				if(results.value == buttons[x]){
+					irvalue = x+1;
+				}
+			}
+		}
+		irrecv.resume();
+	}
+}
+
+int Cing::ReadIR(){
+	SetIRValue();
+	return irvalue;
 }
 //--------------------------------------------
 //                  ColorSensor
