@@ -192,7 +192,6 @@ Prepares the data pin for IR input. This command should be used in `void setup()
 `Cing.InitIR(sensor)`
 
 ---
----
 
 ### Cing.ReadIR()
 
