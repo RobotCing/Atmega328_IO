@@ -121,7 +121,7 @@ Reads the value from light sensor.
 
 #### Parameters
 
-sensor: `1` or `2` used for selection of sensor
+sensor: `1` or `2` used for selection of sensor.
 
 mode: `"digital"` or `"analog"`
 
@@ -155,7 +155,7 @@ From `0` or `100` depending on ambient light.
 
 ### Cing.ReadShineArray()
 
-[Sensor]
+[Build-in sensor]
 
 
 #### Description
