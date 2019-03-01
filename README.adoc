@@ -51,6 +51,27 @@ Reads the value from external button, either `0` or `1`.
 
 ---
 
+### Cing.ReadButton()
+
+[Build-in sensor]
+
+
+#### Description
+
+Reads the value from button, either `0` or `1`. When pressed changes value of `Cing.ReadShineArray(1)` to `100`.
+
+
+#### Syntax
+
+`Cing.ReadButton()`
+
+
+#### Returns
+
+`0` if button is not pressed or `1` if button is pressed.
+
+---
+
 ### Cing.ReadPotentiometerExternal()
 [Sensor]
 
@@ -61,6 +82,22 @@ Reads the value from external potentiometer.
 #### Syntax
 
 `Cing.ReadPotentiometerExternal()`
+
+#### Returns
+From `0` or `100` depending on potentiometer position.
+
+---
+
+### Cing.ReadPotentiometer()
+[Build-in sensor]
+
+#### Description
+
+Reads the value from potentiometer.
+
+#### Syntax
+
+`Cing.ReadPotentiometer()`
 
 #### Returns
 From `0` or `100` depending on potentiometer position.
@@ -109,6 +146,30 @@ Reads the value from external shine sensor.
 
 `Cing.ReadShineSensor()`
 
+
+#### Returns
+
+From `0` or `100` depending on ambient light.
+
+---
+
+### Cing.ReadShineArray()
+
+[Sensor]
+
+
+#### Description
+
+Reads the value from external shine sensor.
+
+
+#### Syntax
+
+`Cing.ReadShineArray(sensor)`
+
+#### Parameters
+
+sensor: `1` or `2` used for selection of sensor.
 
 #### Returns
 
