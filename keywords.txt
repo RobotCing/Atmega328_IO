@@ -21,12 +21,11 @@ ReadButton    				         KEYWORD2
 ReadButtonExternal		         KEYWORD2
 ReadPotentiometer       	     KEYWORD2
 ReadTempSensor			           KEYWORD2
-ReadIRSensor                   KEYWORD2
-StartLed		                   KEYWORD2
+InitLed  		                   KEYWORD2
 SetLedColor		                 KEYWORD2
 ShowLed			                   KEYWORD2
 ReadColorSensor                KEYWORD2
-StartGyro                      KEYWORD2
+InitGyro                       KEYWORD2
 ReadGyro                       KEYWORD2
 ReadShineArray                 KEYWORD2
 Test                           KEYWORD2

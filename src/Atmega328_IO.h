@@ -21,12 +21,11 @@ class Cing
     bool ReadButtonExternal();
     int ReadPotentiometer();
     float ReadTempSensor(int sensor = 0);
-    int ReadIRSensor();
-    void StartLed();
+    void InitLed();
   	void SetLedColor(int led = 1,int red = 100,int green = 100,int blue = 100);
   	void ShowLed();
     int ReadColorSensor();
-    void StartGyro(bool gyro_off = false);
+    void InitGyro(bool gyro_off = false);
     float ReadGyro(String axis,int mode="angle");
     int ReadShineArray(int sensor=1);
     void Test(String mode = "digital");

@@ -302,20 +302,11 @@ float Cing::ReadTempSensor(int sensor)
 		return Temp;
 	}
 //--------------------------------------------
-//            IR
-//--------------------------------------------
-int Cing::ReadIRSensor()
-	{
-		#define IR_pin 4
-		int code;
-
-	}
-
-//--------------------------------------------
 //            LED WS2812
 //--------------------------------------------
-void Cing::StartLed(){
+void Cing::InitLed(){
 	pixels.begin();
+	pixels.show();
 }
 void Cing::SetLedColor(int led,int red,int green,int blue){
 	if(led>0)
@@ -340,7 +331,7 @@ void Cing::StartGyro(bool gyro_off){
   mpu6050.begin();
   mpu6050.calcGyroOffsets(gyro_off);
 }
-float Cing::ReadGyro(String axis,int mode){
+float Cing::InitGyro(String axis,int mode){
 	mpu6050.update();
 	if(mode == "angle"){
 		if(axis == "x" || axis == "X"){
