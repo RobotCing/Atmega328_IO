@@ -233,6 +233,44 @@ Reads the value from external temperature sensor.
 Temperature in °C  from `-55` to `+125`.
 
 ---
+### Cing.InitGyro()
+[Build-in sensor]
+
+#### Description
+
+Prepares gyro modul MPU6050. This command should be used in `void setup(){}`.
+
+#### Syntax
+
+`Cing.InitGyro(offsets)`
+
+#### Parameters
+
+offsets: `true` or `false`. Turns on or off calculating offsets. This parameter is optional and leaving it `false` is recommended.
+
+---
+### Cing.ReadGyro()
+[Build-in sensor]
+
+#### Description
+
+Reads the value from Gyro and accelerometer.
+
+#### Syntax
+
+`Cing.ReadGyro(axis,mode)`
+
+#### Parameters
+
+axis: `x` or `y` or `z`.
+
+mode: `angle`, `accelerometer`
+
+
+#### Returns
+If `angle` is choosed angle is returned in °. When `accelerometer` is choosed acceleration in G is returned .
+
+---
 
 ### Cing.InitLed()
 
@@ -262,10 +300,13 @@ Sets color of WS2812.
 
 `Cing.SetLedColor(led,red,green,blue)`
 
+#### Parameters
+
 led: Led number which you want to set color. Firt led starts at index `1`.
 red: Red value in % from `0` to `100`.
 green: Green value in % from `0` to `100`.
 blue: Blue value in % from `0` to `100`.
+
 ---
 
 ### Cing.ShowLed()
@@ -280,6 +321,36 @@ Display set color of WS2812.
 #### Syntax
 
 `Cing.ShowLed()`
+
+---
+
+### Cing.InitTest()
+
+[LED]
+
+
+#### Description
+
+Prepares Cing board for testing. This command should be used in `void setup(){}`.
+
+#### Syntax
+
+`Cing.InitTest()`
+
+---
+
+### Cing.Test()
+
+[LED]
+
+
+#### Description
+
+Starts testing of Cing board. This command should be used in `void loop(){}`.
+
+#### Syntax
+
+`Cing.Test()`
 
 ---
 
