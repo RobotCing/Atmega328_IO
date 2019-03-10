@@ -7,7 +7,7 @@ http://robotcing.wz.sk
 
 ---
 
-## Attiny Libraries Functions
+## Atmega Libraries Functions
 
 ### Cing.RunMotor()
 [Motor]
