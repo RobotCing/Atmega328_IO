@@ -213,22 +213,17 @@ int Cing::ReadLightSensor(int sensor,String mode)
 //           UltrasonicSensor
 //--------------------------------------------
 
-int Cing::ReadUltrasonicSensor()
+uint8_t Cing::ReadUltrasonicSensor(String mode,int address)
 	{
-		#define UltrasonicSensor 13
-		int duration;
-		int distance;
-		pinMode(UltrasonicSensor, OUTPUT);
-		digitalWrite(UltrasonicSensor, LOW);
-		delayMicroseconds(2);
-		digitalWrite(UltrasonicSensor, HIGH);
-		delayMicroseconds(10);
-		digitalWrite(UltrasonicSensor, LOW);
-		delayMicroseconds(10);
-		pinMode(UltrasonicSensor, INPUT);
-		duration = pulseIn(UltrasonicSensor, HIGH);
-		distance = duration/58.2;
-		return distance;
+		Wire.requestFrom(address, 4);
+	  uint8_t distance = Wire.read();
+	  uint8_t temperature = Wire.read();
+	  uint8_t humidity = Wire.read();
+	  uint8_t tdistance = Wire.read();
+		if(mode = "Distance"){return distance;}
+		else if(mode = "Temperature"){return temperature;}
+		else if(mode = "Humidity"){return humidity;}
+		else if(mode = "TDistance"){return tdistance;}
 	}
 //--------------------------------------------
 //             ShineSensors
@@ -237,7 +232,6 @@ int Cing::ReadShineSensor()
 	{
 		#define ShineSensor 13
 		pinMode(ShineSensor,INPUT);
-		int shine_value;
 		int shine_value = map(digitalRead(ShineSensor),0,1,0,100);
 		return shine_value;
 	}
@@ -311,12 +305,12 @@ void Cing::ShowLed()
 //--------------------------------------------
 //                  Gyro
 //--------------------------------------------
-void Cing::StartGyro(bool gyro_off){
+void Cing::InitGyro(bool gyro_off){
 	Wire.begin();
   mpu6050.begin();
   mpu6050.calcGyroOffsets(gyro_off);
 }
-float Cing::InitGyro(String axis,int mode){
+float Cing::ReadGyro(String axis,int mode){
 	mpu6050.update();
 	if(mode == "angle"){
 		if(axis == "x" || axis == "X"){
@@ -358,11 +352,11 @@ int Cing::ReadShineArray(int sensor){
 //               Show Sensors
 //--------------------------------------------
 void Cing::InitTest(){
-	StartLed();
-	Wire.begin();
+	InitLed();
+	Wire.begin(0x00);
 	Serial.begin(115200);
 	if(Check(0x68)=="Ok"){
-		StartGyro();
+		InitGyro();
 	}
 
 }
@@ -372,7 +366,11 @@ void Cing::Test(String mode){
 	SetLedColor(3,20,0,0);
 	SetLedColor(4,0,20,0);
 	ShowLed();
-	Serial.println(Check(0x69));//BMS
+
+	Serial.println(ReadLightSensor(1,"analog"));//LightSensor1
+	Serial.println(ReadLightSensor(2,"analog"));//LightSensor2
+	Serial.println(ReadShineArray(1));//ShineArray1
+	Serial.println(ReadShineArray(2));//ShineArray2
 	//Gyro
 	if(Check(0x68)=="Ok"){
 		Serial.print("X:");
@@ -398,21 +396,28 @@ void Cing::Test(String mode){
 		Serial.println("Fail");
 		Serial.println("Fail");
 	}
-	Serial.println(Check(0x68));//Sound System
+	Serial.println(ReadButton());//Button
+	Serial.println(Check(0x69));//BMS
 	Serial.println(Check(0x3c));//Oled Display
-	Serial.println(Check(0x3f));//16x2 Display
-	Serial.println(Check(0x3d));//Ultrasonic Sensor
+	Serial.println(Check(0x10));//16x2 Display
+	//Ultrasonic Sensor
+	bool err_ultra = 1;
+	for(int x=16;x<24;x++){
+		if(Check(x) == "Ok"){
+			Serial.println(ReadUltrasonicSensor("Distance",x));
+			err_ultra = 0;
+		}
+	}
+	if(err_ultra == 1){
+		Serial.println("Fail");
+	}
+
 	Serial.println(Check(0x29));//Lidar
+	Serial.println(ReadTempSensor());//TempSensor
 	Serial.println(Check(0x77));//Barometric Pressure Sensor
 	Serial.println(Check(0x77));//Altitude Sensor
-
-	Serial.println(ReadLightSensor(1,"analog"));//LightSensor1
-	Serial.println(ReadLightSensor(2,"analog"));//LightSensor2
+	Serial.println(Check(0x69));//Sound System
 	Serial.println(ReadPotentiometer());//Potentiometer
-	Serial.println(ReadButton());//Button
-	Serial.println(ReadShineArray(1));//ShineArray1
-	Serial.println(ReadShineArray(2));//ShineArray2
-	Serial.println(ReadTempSensor());//TempSensor
 	Serial.println(Check(0x40));//Servo Board
 	Serial.println(Check(0x41));//Motor Encoder A
 	Serial.println(Check(0x42));//Motor Encoder B
