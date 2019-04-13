@@ -26,12 +26,14 @@ class Cing
   	void ShowLed();
     int ReadColorSensor();
     void InitGyro(bool gyro_off = false);
-    int ReadGyro(String axis,int mode="angle");
+    float ReadGyro(String axis,int mode="angle");
     int ReadShineArray(int sensor=1);
     void Test(String mode = "digital");
     void InitTest();
     void InitIR();
     int ReadIR();
+    void InitLidar();
+    int ReadLidar();
 // local variables
   private:
     void sendMessage();

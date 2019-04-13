@@ -32,6 +32,8 @@ Test                           KEYWORD2
 InitTest                       KEYWORD2
 InitIR                         KEYWORD2
 ReadIR                         KEYWORD2
+InitLidar                      KEYWORD2
+ReadLidar                      KEYWORD2
 #######################################
 # Constants (LITERAL1)
 #######################################
