@@ -310,7 +310,7 @@ void Cing::InitGyro(bool gyro_off){
   mpu6050.begin();
   mpu6050.calcGyroOffsets(gyro_off);
 }
-float Cing::ReadGyro(String axis,int mode){
+int Cing::ReadGyro(String axis,int mode){
 	mpu6050.update();
 	if(mode == "angle"){
 		if(axis == "x" || axis == "X"){
@@ -416,7 +416,7 @@ void Cing::Test(String mode){
 	Serial.println(ReadTempSensor());//TempSensor
 	Serial.println(Check(0x77));//Barometric Pressure Sensor
 	Serial.println(Check(0x77));//Altitude Sensor
-	Serial.println(Check(0x69));//Sound System
+	Serial.println(Check(0x69));//IO Expander
 	Serial.println(ReadPotentiometer());//Potentiometer
 	Serial.println(Check(0x40));//Servo Board
 	Serial.println(Check(0x41));//Motor Encoder A
@@ -439,7 +439,7 @@ String Cing::Check(uint8_t address){
 }
 
 //--------------------------------------------
-//               Show Sensors
+//               IR Sensors
 //--------------------------------------------
 int irvalue;
 void Cing::InitIR(){

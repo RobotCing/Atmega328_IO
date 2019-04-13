@@ -26,7 +26,7 @@ class Cing
   	void ShowLed();
     int ReadColorSensor();
     void InitGyro(bool gyro_off = false);
-    float ReadGyro(String axis,int mode="angle");
+    int ReadGyro(String axis,int mode="angle");
     int ReadShineArray(int sensor=1);
     void Test(String mode = "digital");
     void InitTest();
