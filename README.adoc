@@ -353,9 +353,7 @@ Starts testing of Cing board. This command should be used in `void loop(){}`.
 
 ---
 
-## In progress
-
-### Cing.UltrasonicSensor()
+### Cing.ReadUltrasonicSensor()
 
 [Sensor]
 
@@ -367,7 +365,7 @@ Reads the value from external ultrasonic sensor.
 
 #### Syntax
 
-`Cing.UltrasonicSensor()`
+`Cing.ReadUltrasonicSensor()`
 
 
 #### Returns

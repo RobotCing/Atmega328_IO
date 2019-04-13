@@ -34,6 +34,8 @@ InitIR                         KEYWORD2
 ReadIR                         KEYWORD2
 InitLidar                      KEYWORD2
 ReadLidar                      KEYWORD2
+InitServo                      KEYWORD2
+SetServo                       KEYWORD2
 #######################################
 # Constants (LITERAL1)
 #######################################

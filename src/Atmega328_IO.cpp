@@ -14,12 +14,23 @@ Created by RobotCing Team
 #include <Wire.h>
 #include <IRremote.h>
 #include <VL53L0X.h>
+#include <Servo.h>
 
 //--------------------------------------------
 #include "Arduino.h"
 #include "Atmega328_IO.h"
 //--------------------------------------------
 Cing::Cing(){}
+//--------------------------------------------
+//             Servo setup
+//--------------------------------------------
+#define Servo_A 9
+#define Servo_B 10
+#define Servo_C 6
+
+Servo ServoA;
+Servo ServoB;
+Servo ServoC;
 //--------------------------------------------
 //            Neopixel setup
 //--------------------------------------------
@@ -498,6 +509,33 @@ void Cing::InitLidar(){
 int Cing::ReadLidar(){
 	return sensor.readRangeSingleMillimeters();
 }
+//--------------------------------------------
+//                  Servo
+//--------------------------------------------
+void Cing::InitServo(String servo){
+	if(servo == "A"){
+		ServoA.attach(Servo_A);
+	}
+	else if(servo == "B"){
+		ServoB.attach(Servo_B);
+	}
+	else{
+		ServoC.attach(Servo_C);
+	}
+}
+void Cing::SetServo(String servo,int angle_in){
+	int angle = constrain(map(angle_in,-90,90,0,180),0,180);
+	if(servo == "A"){
+		ServoA.write(angle);
+	}
+	else if(servo == "B"){
+		ServoB.write(angle);
+	}
+	else{
+		ServoC.write(angle);
+	}
+}
+
 //--------------------------------------------
 //                  ColorSensor
 //--------------------------------------------
