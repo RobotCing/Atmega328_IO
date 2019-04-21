@@ -322,7 +322,7 @@ void Cing::ShowLed()
 //                  Gyro
 //--------------------------------------------
 void Cing::InitGyro(bool gyro_off){
-	Wire.begin();
+	Wire.begin(0x00);
   mpu6050.begin();
   mpu6050.calcGyroOffsets(gyro_off);
 }
