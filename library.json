@@ -26,7 +26,7 @@
     "authors": "Stanislav Jochman, Veronika Nemjová",
     "frameworks": "arduino"
   },
-  "version": "3.1.2",
+  "version": "3.1.3",
   "frameworks": "arduino",
   "platforms": "*"
 }

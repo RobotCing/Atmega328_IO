@@ -15,6 +15,7 @@ Created by RobotCing Team
 #include <IRremote.h>
 #include <VL53L0X.h>
 #include <Servo.h>
+#include <Adafruit_ADS1015.h>
 
 //--------------------------------------------
 #include "Arduino.h"
@@ -51,6 +52,10 @@ VL53L0X sensor;
 #define ONE_WIRE_BUS 13
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
+//--------------------------------------------
+//                BMS
+//--------------------------------------------
+Adafruit_ADS1015 ads;
 //--------------------------------------------
 //               IR Setup
 //--------------------------------------------
@@ -415,7 +420,17 @@ void Cing::Test(String mode){
 		Serial.println("Fail");
 	}
 	Serial.println(ReadButton());//Button
-	Serial.println(Check(0x69));//BMS
+	//BMS
+	if(Check(0x48)=="Ok"){
+		Serial.print(ReadBMS("Voltage"));
+		Serial.print(" V   ");
+		Serial.print(ReadBMS("Current"));
+		Serial.println(" A");
+	}
+	else{
+		Serial.println("Fail");
+		Serial.println("BMS");
+	}
 	Serial.println(Check(0x3c));//Oled Display
 	Serial.println(Check(0x10));//16x2 Display
 	//Ultrasonic Sensor
@@ -535,7 +550,21 @@ void Cing::SetServo(String servo,int angle_in){
 		ServoC.write(angle);
 	}
 }
-
+//--------------------------------------------
+//                  BMS
+//--------------------------------------------
+void Cing::InitBMS(){
+	ads.begin();
+}
+float Cing::ReadBMS(String mode){
+  if(mode == "Voltage"){
+    float voltage = ads.readADC_Differential_0_1();
+    return voltage*0.003;
+  }
+  else{
+    return ads.readADC_Differential_2_3();
+  }  
+}
 //--------------------------------------------
 //                  ColorSensor
 //--------------------------------------------
