@@ -19,6 +19,7 @@ Created by RobotCing Team
 #include <Adafruit_BME280.h>
 #include <Adafruit_Sensor.h>
 #include <LiquidCrystal_I2C.h>
+#include <SoftwareSerial.h>
 
 //--------------------------------------------
 #include "Arduino.h"
@@ -73,6 +74,10 @@ Adafruit_BME280 bme;
 //               16x2 display
 //--------------------------------------------
 LiquidCrystal_I2C lcd(0x27,16,2);
+//--------------------------------------------
+//               Bluetooth
+//--------------------------------------------
+SoftwareSerial hc06(2,5);
 //--------------------------------------------
 //              Motors
 //--------------------------------------------
@@ -383,7 +388,13 @@ int Cing::ReadShineArray(int sensor){
 //--------------------------------------------
 //               Show Sensors
 //--------------------------------------------
-void Cing::InitTest(){
+void Cing::InitTest(String mode){
+	if(mode == "PC"){
+		Serial.begin(115200);
+	}
+	else{
+		hc06.begin(9600);
+	}
 	InitLed();
 	Wire.begin(0x00);
 	Serial.begin(115200);
@@ -411,89 +422,174 @@ void Cing::Test(String mode){
 	SetLedColor(3,5,0,0);
 	SetLedColor(4,0,5,0);
 	ShowLed();
-
-	Serial.println(ReadLightSensor(1,"analog"));//LightSensor1
-	Serial.println(ReadLightSensor(2,"analog"));//LightSensor2
-	Serial.println(ReadShineArray(1));//ShineArray1
-	Serial.println(ReadShineArray(2));//ShineArray2
-	//Gyro
-	if(Check(0x68)=="Ok"){
-		Serial.print("X:");
-		Serial.print(ReadGyro("x","angle"));
-		Serial.print(" ");
-		Serial.print("Y:");
-		Serial.print(ReadGyro("y","angle"));
-		Serial.print(" ");
-		Serial.print("Z:");
-		Serial.println(ReadGyro("z","angle"));
-		Serial.print(" ");
-		Serial.print("X:");
-		Serial.print(ReadGyro("x","acceleration"));
-		Serial.print("G ");
-		Serial.print("Y:");
-		Serial.print(ReadGyro("y","acceleration"));
-		Serial.print("G ");
-		Serial.print("Z:");
-		Serial.print(ReadGyro("z","acceleration"));
-		Serial.println("G");
-	}
-	else{
-		Serial.println("Fail");
-		Serial.println("Fail");
-	}
-	Serial.println(ReadButton());//Button
-	//BMS
-	if(Check(0x48)=="Ok"){
-		Serial.print(ReadBMS("Voltage"));
-		Serial.print(" V   ");
-		Serial.print(ReadBMS("Current"));
-		Serial.println(" A");
-	}
-	else{
-		Serial.println("BMS Failed");
-	}
-	Serial.println(Check(0x3c));//Oled Display
-	Serial.println(Check(0x27));//16x2 Display
-	//Ultrasonic Sensor
-	bool err_ultra = 1;
-	for(int x=16;x<24;x++){
-		if(Check(x) == "Ok"){
-			Serial.println(ReadUltrasonicSensor("Distance",x));
-			err_ultra = 0;
+	if(mode == "PC"){
+		Serial.println(ReadLightSensor(1,"analog"));//LightSensor1
+		Serial.println(ReadLightSensor(2,"analog"));//LightSensor2
+		Serial.println(ReadShineArray(1));//ShineArray1
+		Serial.println(ReadShineArray(2));//ShineArray2
+		//Gyro
+		if(Check(0x68)=="Ok"){
+			Serial.print("X:");
+			Serial.print(ReadGyro("x","angle"));
+			Serial.print(" ");
+			Serial.print("Y:");
+			Serial.print(ReadGyro("y","angle"));
+			Serial.print(" ");
+			Serial.print("Z:");
+			Serial.println(ReadGyro("z","angle"));
+			Serial.print(" ");
+			Serial.print("X:");
+			Serial.print(ReadGyro("x","acceleration"));
+			Serial.print("G ");
+			Serial.print("Y:");
+			Serial.print(ReadGyro("y","acceleration"));
+			Serial.print("G ");
+			Serial.print("Z:");
+			Serial.print(ReadGyro("z","acceleration"));
+			Serial.println("G");
 		}
-	}
-	if(err_ultra == 1){
-		Serial.println("Fail");
-	}
-	//Lidar
-	if(Check(0x29)=="Ok"){
-		Serial.print(ReadLidar());
-		Serial.println(" mm");
+		else{
+			Serial.println("Fail");
+			Serial.println("Fail");
+		}
+		Serial.println(ReadButton());//Button
+		//BMS
+		if(Check(0x48)=="Ok"){
+			Serial.print(ReadBMS("Voltage"));
+			Serial.print(" V   ");
+			Serial.print(ReadBMS("Current"));
+			Serial.println(" A");
+		}
+		else{
+			Serial.println("BMS Failed");
+		}
+		Serial.println(Check(0x3c));//Oled Display
+		Serial.println(Check(0x27));//16x2 Display
+		//Ultrasonic Sensor
+		bool err_ultra = 1;
+		for(int x=16;x<24;x++){
+			if(Check(x) == "Ok"){
+				Serial.println(ReadUltrasonicSensor("Distance",x));
+				err_ultra = 0;
+			}
+		}
+		if(err_ultra == 1){
+			Serial.println("Fail");
+		}
+		//Lidar
+		if(Check(0x29)=="Ok"){
+			Serial.print(ReadLidar());
+			Serial.println(" mm");
+		}
+		else{
+			Serial.println("Fail");
+		}
+		Serial.println(ReadTempSensor());//TempSensor
+		//BME280
+		if(Check(0x76)=="Ok"){
+			//Serial.print(ReadAmbientTemperature());
+			//Serial.println(" C");
+			Serial.print(ReadPressure());
+			Serial.println(" hPa");
+			Serial.print(ReadAltitude());
+			Serial.println(" m");
+		}
+		else{
+			Serial.println("Fail");
+			Serial.println("Fail");
+		}
+		Serial.println(Check(0x69));//IO Expander
+		Serial.println(ReadPotentiometer());//Potentiometer
+		Serial.println(Check(0x40));//Servo Board
+		Serial.println(Check(0x41));//Motor Encoder A
+		Serial.println(Check(0x42));//Motor Encoder B
+		Serial.println("------");
+		delay(1);
 	}
 	else{
-		Serial.println("Fail");
+		hc06.println(ReadLightSensor(1,"analog"));//LightSensor1
+		hc06.println(ReadLightSensor(2,"analog"));//LightSensor2
+		hc06.println(ReadShineArray(1));//ShineArray1
+		hc06.println(ReadShineArray(2));//ShineArray2
+		//Gyro
+		if(Check(0x68)=="Ok"){
+			hc06.print("X:");
+			hc06.print(ReadGyro("x","angle"));
+			hc06.print(" ");
+			hc06.print("Y:");
+			hc06.print(ReadGyro("y","angle"));
+			hc06.print(" ");
+			hc06.print("Z:");
+			hc06.println(ReadGyro("z","angle"));
+			hc06.print(" ");
+			hc06.print("X:");
+			hc06.print(ReadGyro("x","acceleration"));
+			hc06.print("G ");
+			hc06.print("Y:");
+			hc06.print(ReadGyro("y","acceleration"));
+			hc06.print("G ");
+			hc06.print("Z:");
+			hc06.print(ReadGyro("z","acceleration"));
+			hc06.println("G");
+		}
+		else{
+			hc06.println("Fail");
+			hc06.println("Fail");
+		}
+		hc06.println(ReadButton());//Button
+		//BMS
+		if(Check(0x48)=="Ok"){
+			hc06.print(ReadBMS("Voltage"));
+			hc06.print(" V   ");
+			hc06.print(ReadBMS("Current"));
+			hc06.println(" A");
+		}
+		else{
+			hc06.println("BMS Failed");
+		}
+		hc06.println(Check(0x3c));//Oled Display
+		hc06.println(Check(0x27));//16x2 Display
+		//Ultrasonic Sensor
+		bool err_ultra = 1;
+		for(int x=16;x<24;x++){
+			if(Check(x) == "Ok"){
+				hc06.println(ReadUltrasonicSensor("Distance",x));
+				err_ultra = 0;
+			}
+		}
+		if(err_ultra == 1){
+			hc06.println("Fail");
+		}
+		//Lidar
+		if(Check(0x29)=="Ok"){
+			hc06.print(ReadLidar());
+			hc06.println(" mm");
+		}
+		else{
+			hc06.println("Fail");
+		}
+		hc06.println(ReadTempSensor());//TempSensor
+		//BME280
+		if(Check(0x76)=="Ok"){
+			//hc06.print(ReadAmbientTemperature());
+			//hc06.println(" C");
+			hc06.print(ReadPressure());
+			hc06.println(" hPa");
+			hc06.print(ReadAltitude());
+			hc06.println(" m");
+		}
+		else{
+			hc06.println("Fail");
+			hc06.println("Fail");
+		}
+		hc06.println(Check(0x69));//IO Expander
+		hc06.println(ReadPotentiometer());//Potentiometer
+		hc06.println(Check(0x40));//Servo Board
+		hc06.println(Check(0x41));//Motor Encoder A
+		hc06.println(Check(0x42));//Motor Encoder B
+		hc06.println("------");
+		delay(1);
 	}
-	Serial.println(ReadTempSensor());//TempSensor
-	//BME280
-	if(Check(0x76)=="Ok"){
-		//Serial.print(ReadAmbientTemperature());
-		//Serial.println(" C");
-		Serial.print(ReadPressure());
-		Serial.println(" hPa");
-		Serial.print(ReadAltitude());
-		Serial.println(" m");
-	}
-	else{
-		Serial.println("Fail");
-		Serial.println("Fail");
-	}
-	Serial.println(Check(0x69));//IO Expander
-	Serial.println(ReadPotentiometer());//Potentiometer
-	Serial.println(Check(0x40));//Servo Board
-	Serial.println(Check(0x41));//Motor Encoder A
-	Serial.println(Check(0x42));//Motor Encoder B
-	Serial.println("------");
-	delay(1);
 }
 //--------------------------------------------
 String Cing::Check(uint8_t address){

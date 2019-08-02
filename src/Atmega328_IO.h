@@ -28,8 +28,8 @@ class Cing
     void InitGyro(bool gyro_off = false);
     float ReadGyro(String axis,int mode="angle");
     int ReadShineArray(int sensor=1);
-    void Test(String mode = "digital");
-    void InitTest();
+    void Test(String mode = "PC");
+    void InitTest(String mode = "PC");
     void InitIR();
     int ReadIR();
     void InitLidar();
