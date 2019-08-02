@@ -16,6 +16,9 @@ Created by RobotCing Team
 #include <VL53L0X.h>
 #include <Servo.h>
 #include <Adafruit_ADS1015.h>
+#include <Adafruit_BME280.h>
+#include <Adafruit_Sensor.h>
+#include <LiquidCrystal_I2C.h>
 
 //--------------------------------------------
 #include "Arduino.h"
@@ -62,6 +65,14 @@ Adafruit_ADS1015 ads;
 #define RECV_PIN 4
 IRrecv irrecv(RECV_PIN);
 decode_results results;
+//--------------------------------------------
+//               BME280
+//--------------------------------------------
+Adafruit_BME280 bme;
+//--------------------------------------------
+//               16x2 display
+//--------------------------------------------
+LiquidCrystal_I2C lcd(0x27,16,2);
 //--------------------------------------------
 //              Motors
 //--------------------------------------------
@@ -298,7 +309,7 @@ float Cing::ReadTempSensor(int sensor)
 		float Temp;
 		sensors.requestTemperatures();
 		Temp = sensors.getTempCByIndex(sensor);
-		delay(50);
+		delay(10);
 		return Temp;
 	}
 //--------------------------------------------
@@ -327,7 +338,7 @@ void Cing::ShowLed()
 //                  Gyro
 //--------------------------------------------
 void Cing::InitGyro(bool gyro_off){
-	Wire.begin(0x00);
+  Wire.begin(0x00);
   mpu6050.begin();
   mpu6050.calcGyroOffsets(gyro_off);
 }
@@ -376,18 +387,29 @@ void Cing::InitTest(){
 	InitLed();
 	Wire.begin(0x00);
 	Serial.begin(115200);
+	if(Check(0x76)=="Ok"){
+		InitBME280();
+	}
 	if(Check(0x68)=="Ok"){
 		InitGyro();
 	}
 	if(Check(0x29)=="Ok"){
 		InitLidar();
 	}
+	if(Check(0x27)=="Ok"){
+		InitDisplay();
+		TurnBacklight();
+		SetCursor(3,0);
+		DisplayPrint("Robot Cing");
+		SetCursor(2,1);
+		DisplayPrint("Display Test");
+	}
 }
 void Cing::Test(String mode){
 	SetLedColor(1,0,0,0);
-	SetLedColor(2,0,0,20);
-	SetLedColor(3,20,0,0);
-	SetLedColor(4,0,20,0);
+	SetLedColor(2,0,0,5);
+	SetLedColor(3,5,0,0);
+	SetLedColor(4,0,5,0);
 	ShowLed();
 
 	Serial.println(ReadLightSensor(1,"analog"));//LightSensor1
@@ -428,11 +450,10 @@ void Cing::Test(String mode){
 		Serial.println(" A");
 	}
 	else{
-		Serial.println("Fail");
-		Serial.println("BMS");
+		Serial.println("BMS Failed");
 	}
 	Serial.println(Check(0x3c));//Oled Display
-	Serial.println(Check(0x10));//16x2 Display
+	Serial.println(Check(0x27));//16x2 Display
 	//Ultrasonic Sensor
 	bool err_ultra = 1;
 	for(int x=16;x<24;x++){
@@ -453,8 +474,19 @@ void Cing::Test(String mode){
 		Serial.println("Fail");
 	}
 	Serial.println(ReadTempSensor());//TempSensor
-	Serial.println(Check(0x77));//Barometric Pressure Sensor
-	Serial.println(Check(0x77));//Altitude Sensor
+	//BME280
+	if(Check(0x76)=="Ok"){
+		//Serial.print(ReadAmbientTemperature());
+		//Serial.println(" C");
+		Serial.print(ReadPressure());
+		Serial.println(" hPa");
+		Serial.print(ReadAltitude());
+		Serial.println(" m");
+	}
+	else{
+		Serial.println("Fail");
+		Serial.println("Fail");
+	}
 	Serial.println(Check(0x69));//IO Expander
 	Serial.println(ReadPotentiometer());//Potentiometer
 	Serial.println(Check(0x40));//Servo Board
@@ -518,7 +550,7 @@ int Cing::ReadIR(){
 //--------------------------------------------
 void Cing::InitLidar(){
 	sensor.init();
-  sensor.setTimeout(500);
+ 	sensor.setTimeout(100);
 	sensor.setMeasurementTimingBudget(50000);
 }
 int Cing::ReadLidar(){
@@ -565,6 +597,53 @@ float Cing::ReadBMS(String mode){
     return ads.readADC_Differential_2_3();
   }  
 }
+//--------------------------------------------
+//                  BME280
+//--------------------------------------------
+void Cing::InitBME280(){
+  bme.begin(0x76);
+}
+float Cing::ReadAltitude(){
+  return bme.readAltitude(1013.25);
+}
+float Cing::ReadPressure(){
+  return bme.readPressure()/100.0F;
+}
+float Cing::ReadHumidity(String mode){
+  if (mode == "internal"){
+	return bme.readPressure();
+  }  
+}
+//--------------------------------------------
+//                  Displays
+//--------------------------------------------
+void Cing::InitDisplay(String display){
+  if(display == "16x2"){
+	  lcd.init();
+  }
+}
+void Cing::TurnBacklight(bool state){
+	if (state == 1){
+		lcd.backlight();
+	}
+	else{
+		lcd.noBacklight();
+	}
+	
+}
+void Cing::SetCursor(int x,int y,String display){
+	if(display == "16x2"){
+		lcd.setCursor(x,y);
+	}
+	
+}
+void Cing::DisplayPrint(String message,String display){
+	if(display == "16x2"){
+		lcd.print(message);
+	}
+}
+
+
 //--------------------------------------------
 //                  ColorSensor
 //--------------------------------------------

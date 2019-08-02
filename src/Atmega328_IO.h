@@ -36,8 +36,16 @@ class Cing
     int ReadLidar();
     void InitServo(String servo = "C");
     void SetServo(String servo = "C",int angle = 0);
-    float ReadBMS(String mode = "Voltage");
     void InitBMS();
+    float ReadBMS(String mode = "Voltage");
+    void InitBME280();
+    float ReadAltitude();
+    float ReadPressure();
+    float ReadHumidity(String mode = "internal");
+    void InitDisplay(String display = "16x2");
+    void TurnBacklight(bool state = 1);
+    void SetCursor(int x=0,int y=0,String display="16x2");
+    void DisplayPrint(String message="",String display="16x2");
 // local variables
   private:
     void sendMessage();
