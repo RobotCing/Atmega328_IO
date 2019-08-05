@@ -409,9 +409,9 @@ void Cing::InitTest(String mode){
 	if(Check(0x27)=="Ok"){
 		InitDisplay();
 		TurnBacklight();
-		SetCursor(3,0);
+		SetCursor(4,1);
 		DisplayPrint("Robot Cing");
-		SetCursor(2,1);
+		SetCursor(3,2);
 		DisplayPrint("Display Test");
 	}
 }
@@ -728,7 +728,7 @@ void Cing::TurnBacklight(bool state){
 }
 void Cing::SetCursor(int x,int y,String display){
 	if(display == "16x2"){
-		lcd.setCursor(x,y);
+		lcd.setCursor(x+1,y+1);
 	}
 	
 }
