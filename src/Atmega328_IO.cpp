@@ -19,7 +19,6 @@ Created by RobotCing Team
 #include <Adafruit_BME280.h>
 #include <Adafruit_Sensor.h>
 #include <LiquidCrystal_I2C.h>
-#include <SoftwareSerial.h>
 
 //--------------------------------------------
 #include "Arduino.h"
