@@ -248,7 +248,10 @@ int Cing::ReadLightSensor(int sensor,String mode)
 //--------------------------------------------
 //           UltrasonicSensor
 //--------------------------------------------
-
+void Cing::InitUltrasonicSensor()
+	{
+		Wire.begin();
+	}
 uint8_t Cing::ReadUltrasonicSensor(String mode,int address)
 	{
 		Wire.requestFrom(address, 4);
@@ -261,6 +264,7 @@ uint8_t Cing::ReadUltrasonicSensor(String mode,int address)
 		else if(mode = "Humidity"){return humidity;}
 		else if(mode = "TDistance"){return tdistance;}
 	}
+InitUltrasonicSensor
 //--------------------------------------------
 //             ShineSensors
 //--------------------------------------------
