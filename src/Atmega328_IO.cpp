@@ -454,9 +454,9 @@ void Cing::Test(String mode){
 		Serial.println(ReadButton());//Button
 		//BMS
 		if(Check(0x48)=="Ok"){
-			Serial.print(ReadBMS("Voltage"));
+			Serial.print(ReadBMS("voltage"));
 			Serial.print(" V   ");
-			Serial.print(ReadBMS("Current"));
+			Serial.print(ReadBMS("current"));
 			Serial.println(" A");
 		}
 		else{
@@ -538,9 +538,9 @@ void Cing::Test(String mode){
 		hc06.println(ReadButton());//Button
 		//BMS
 		if(Check(0x48)=="Ok"){
-			hc06.print(ReadBMS("Voltage"));
+			hc06.print(ReadBMS("voltage"));
 			hc06.print(" V   ");
-			hc06.print(ReadBMS("Current"));
+			hc06.print(ReadBMS("current"));
 			hc06.println(" A");
 		}
 		else{
@@ -684,7 +684,7 @@ void Cing::InitBMS(){
 	ads.begin();
 }
 float Cing::ReadBMS(String mode){
-  if(mode == "Voltage"){
+  if(mode == "voltage"){
     float voltage = ads.readADC_Differential_0_1();
     return voltage*0.003;
   }
