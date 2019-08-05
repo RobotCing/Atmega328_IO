@@ -252,19 +252,17 @@ void Cing::InitUltrasonicSensor()
 	{
 		Wire.begin();
 	}
-uint8_t Cing::ReadUltrasonicSensor(String mode,int address)
-	{
-		Wire.requestFrom(address, 4);
-	  uint8_t distance = Wire.read();
-	  uint8_t temperature = Wire.read();
-	  uint8_t humidity = Wire.read();
-	  uint8_t tdistance = Wire.read();
-		if(mode = "Distance"){return distance;}
-		else if(mode = "Temperature"){return temperature;}
-		else if(mode = "Humidity"){return humidity;}
-		else if(mode = "TDistance"){return tdistance;}
-	}
-InitUltrasonicSensor
+uint8_t Cing::ReadUltrasonicSensor(String mode,int address){
+	Wire.requestFrom(address, 4);
+	uint8_t distance = Wire.read();
+	uint8_t temperature = Wire.read();
+	uint8_t humidity = Wire.read();
+	uint8_t tdistance = Wire.read();
+	if(mode = "Distance"){return distance;}
+	else if(mode = "Temperature"){return temperature;}
+	else if(mode = "Humidity"){return humidity;}
+	else if(mode = "TDistance"){return tdistance;}
+}
 //--------------------------------------------
 //             ShineSensors
 //--------------------------------------------
