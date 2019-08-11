@@ -16,7 +16,7 @@ class Cing
     void RunMotor(String motor,int speed= 100,String mode = "digital");
     int ReadLightSensor(int sensor = 1,String mode = "digital");
     void InitUltrasonicSensor();
-    uint8_t ReadUltrasonicSensor(String mode="Distance",int address = 16);
+    uint8_t ReadUltrasonicSensor(String mode="distance",int address = 16);
     int ReadShineSensor();
     bool ReadButton();
     bool ReadButtonExternal();
@@ -38,7 +38,7 @@ class Cing
     void InitServo(String servo = "C");
     void SetServo(String servo = "C",int angle = 0);
     void InitBMS();
-    float ReadBMS(String mode = "Voltage");
+    float ReadBMS(String mode = "voltage");
     void InitBME280();
     float ReadAltitude();
     float ReadPressure();

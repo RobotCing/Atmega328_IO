@@ -391,7 +391,7 @@ int Cing::ReadShineArray(int sensor){
 //--------------------------------------------
 void Cing::InitTest(String mode){
 	if(mode == "PC"){
-		Serial.begin(115200);
+		Serial.begin(9600);
 	}
 	else{
 		hc06.begin(9600);
@@ -470,7 +470,7 @@ void Cing::Test(String mode){
 		bool err_ultra = 1;
 		for(int x=16;x<24;x++){
 			if(Check(x) == "Ok"){
-				Serial.println(ReadUltrasonicSensor("Distance",x));
+				Serial.println(ReadUltrasonicSensor("distance",x));
 				err_ultra = 0;
 			}
 		}
@@ -554,7 +554,7 @@ void Cing::Test(String mode){
 		bool err_ultra = 1;
 		for(int x=16;x<24;x++){
 			if(Check(x) == "Ok"){
-				hc06.println(ReadUltrasonicSensor("Distance",x));
+				hc06.println(ReadUltrasonicSensor("distance",x));
 				err_ultra = 0;
 			}
 		}
