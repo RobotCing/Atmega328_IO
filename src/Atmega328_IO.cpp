@@ -398,7 +398,6 @@ void Cing::InitTest(String mode){
 	}
 	InitLed();
 	Wire.begin(0x00);
-	Serial.begin(115200);
 	if(Check(0x76)=="Ok"){
 		InitBME280();
 	}
