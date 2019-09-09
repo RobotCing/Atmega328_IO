@@ -78,6 +78,16 @@ LiquidCrystal_I2C lcd(0x27,16,2);
 //--------------------------------------------
 SoftwareSerial hc06(2,5);
 //--------------------------------------------
+//              Stepper Motors
+//--------------------------------------------
+#define DIRA 10
+#define STEPA 9
+#define SLEEPA 12
+
+#define DIRB 8
+#define STEPB 7
+#define SLEEPB 11
+//--------------------------------------------
 //              Motors
 //--------------------------------------------
 void Cing::RunMotor(String motor,int speed,String mode)
