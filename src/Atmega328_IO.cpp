@@ -80,8 +80,8 @@ SoftwareSerial hc06(2,5);
 //--------------------------------------------
 //              Stepper Motors
 //--------------------------------------------
-#define DIRA 10
-#define STEPA 9
+#define DIRA 9
+#define STEPA 10
 #define SLEEPA 12
 
 #define DIRB 8
