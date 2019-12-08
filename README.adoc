@@ -58,7 +58,7 @@ Reads the value from external button, either `0` or `1`.
 
 #### Description
 
-Reads the value from button, either `0` or `1`. When pressed changes value of `Cing.ReadShineArray(1)` to `100`.
+Reads the value from button, either `0` or `1`. When pressed changes value of `Cing.ReadButton()` to `1`.
 
 
 #### Syntax
