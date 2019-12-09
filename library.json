@@ -12,7 +12,7 @@
     {
       "name": "Stanislav Jochman",
       "email": "s.jochman@gmail.com",
-      "url": "http://robotcing.wz.sk/",
+      "url": "http://robotcing.sk/",
       "maintainer": true
     },
     {
@@ -26,7 +26,7 @@
     "authors": "Stanislav Jochman, Veronika Nemjová",
     "frameworks": "arduino"
   },
-  "version": "3.1.7",
+  "version": "3.1.8",
   "frameworks": "arduino",
   "platforms": "*"
 }

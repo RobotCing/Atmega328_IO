@@ -688,6 +688,17 @@ void Cing::SetServo(String servo,int angle_in){
 		ServoC.write(angle);
 	}
 }
+void Cing::DisableServo(String servo){
+	if(servo == "A"){
+		ServoA.detach(Servo_A);
+	}
+	else if(servo == "B"){
+		ServoB.detach(Servo_B);
+	}
+	else{
+		ServoC.detach(Servo_C);
+	}
+}
 //--------------------------------------------
 //                  BMS
 //--------------------------------------------

@@ -8,7 +8,7 @@ Created by RobotCing Team
 #######################################
 # Datatypes (KEYWORD1)
 #######################################
-Atmega328_IO	                   KEYWORD1
+Atmega328_IO	               KEYWORD1
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
@@ -35,6 +35,7 @@ ReadIR                         KEYWORD2
 InitLidar                      KEYWORD2
 ReadLidar                      KEYWORD2
 InitServo                      KEYWORD2
+DisableServo                   KEYWORD2
 SetServo                       KEYWORD2
 InitBMS                        KEYWORD2
 ReadBMS                        KEYWORD2

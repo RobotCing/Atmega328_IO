@@ -36,6 +36,7 @@ class Cing
     void InitLidar();
     int ReadLidar();
     void InitServo(String servo = "C");
+    void DisableServo(String servo = "C");
     void SetServo(String servo = "C",int angle = 0);
     void InitBMS();
     float ReadBMS(String mode = "voltage");
