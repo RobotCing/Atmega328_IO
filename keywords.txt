@@ -12,41 +12,41 @@ Atmega328_IO	               KEYWORD1
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
-Cing                           KEYWORD2
-RunMotor					   KEYWORD2
-ReadLightSensor				   KEYWORD2
-ReadUltrasonicSensor		   KEYWORD2
-ReadShineSensor				   KEYWORD2
-ReadButton    				   KEYWORD2
-ReadButtonExternal		       KEYWORD2
-ReadPotentiometer       	   KEYWORD2
-ReadTempSensor			       KEYWORD2
-InitLed  		               KEYWORD2
-SetLedColor		               KEYWORD2
-ShowLed			               KEYWORD2
-ReadColorSensor                KEYWORD2
-InitGyro                       KEYWORD2
-ReadGyro                       KEYWORD2
-ReadShineArray                 KEYWORD2
-Test                           KEYWORD2
-InitTest                       KEYWORD2
-InitIR                         KEYWORD2
-ReadIR                         KEYWORD2
-InitLidar                      KEYWORD2
-ReadLidar                      KEYWORD2
-InitServo                      KEYWORD2
-DisableServo                   KEYWORD2
-SetServo                       KEYWORD2
-InitBMS                        KEYWORD2
-ReadBMS                        KEYWORD2
-InitBME280                     KEYWORD2
-ReadAltitude                   KEYWORD2
-ReadPressure                   KEYWORD2
-ReadHumidity                   KEYWORD2
-InitDisplay                    KEYWORD2
-TurnBacklight                  KEYWORD2
-SetCursor                      KEYWORD2
-DisplayPrint                   KEYWORD2
+Cing    KEYWORD2
+RunMotor    KEYWORD2
+ReadLightSensor KEYWORD2
+ReadUltrasonicSensor    KEYWORD2
+ReadShineSensor KEYWORD2
+ReadButton  KEYWORD2
+ReadButtonExternal  KEYWORD2
+ReadPotentiometer   KEYWORD2
+ReadTempSensor  KEYWORD2
+InitLed KEYWORD2
+SetLedColor KEYWORD2
+ShowLed KEYWORD2
+ReadColorSensor KEYWORD2
+InitGyro    KEYWORD2
+ReadGyro    KEYWORD2
+ReadShineArray  KEYWORD2
+Test    KEYWORD2
+InitTest    KEYWORD2
+InitIR  KEYWORD2
+ReadIR  KEYWORD2
+InitLidar   KEYWORD2
+ReadLidar   KEYWORD2
+InitServo   KEYWORD2
+DisableServo    KEYWORD2
+SetServo    KEYWORD2
+InitBMS KEYWORD2
+ReadBMS KEYWORD2
+InitBME280  KEYWORD2
+ReadAltitude    KEYWORD2
+ReadPressure    KEYWORD2
+ReadHumidity    KEYWORD2
+InitDisplay KEYWORD2
+TurnBacklight   KEYWORD2
+SetCursor   KEYWORD2
+DisplayPrint    KEYWORD2
 #######################################
 # Constants (LITERAL1)
 #######################################
